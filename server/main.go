@@ -4,11 +4,13 @@ import (
 	"etherverse.com/m/controllers"
 	"etherverse.com/m/database"
 	"etherverse.com/m/entities"
+	"etherverse.com/m/environment"
 	"github.com/gorilla/mux"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
 	"github.com/rs/cors"
 	"log"
 	"net/http"
+	"os"
 )
 
 func main() {
@@ -39,11 +41,13 @@ func main() {
 }
 
 func initDB() {
+	environment.SetEnviornmentVariables()
+
 	config := database.Config{
-		ServerName: "localhost:3306",
-		User:       "Caleb",
-		Password:   "7JollyIsland!",
-		DB:         "posty",
+		ServerName: os.Getenv("SERVER_NAME"),
+		User:       os.Getenv("USER"),
+		Password:   os.Getenv("PASSWORD"),
+		DB:         os.Getenv("DATABASE_NAME"),
 	}
 
 	connectionString := database.GetConnectionString(config)
