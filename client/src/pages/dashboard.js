@@ -15,6 +15,9 @@ const Dashboard = () => {
           <GridItem w="100%">
             <EthereumForm />
           </GridItem>
+          <GridItem w="100%">
+            <Transactions />
+          </GridItem>
         </Grid>
       </Container>
     );
