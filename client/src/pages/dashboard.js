@@ -1,5 +1,6 @@
 import { Container, Grid, GridItem } from "@chakra-ui/react";
 import React from "react";
+import Articles from "../components/Articles";
 import EthereumForm from "../components/EthereumForm";
 import Transactions from "../components/Transactions";
 import { useScreenType } from "../utils/useScreenType";
@@ -17,6 +18,7 @@ const Dashboard = () => {
           </GridItem>
           <GridItem w="100%">
             <Transactions />
+            <Articles />
           </GridItem>
         </Grid>
       </Container>
@@ -27,9 +29,10 @@ const Dashboard = () => {
         <Grid templateColumns="repeat(2, 1fr)" gap={6}>
           <GridItem w="100%">
             <EthereumForm />
+            <Transactions />
           </GridItem>
           <GridItem w="100%">
-            <Transactions />
+            <Articles />
           </GridItem>
         </Grid>
       </Container>
@@ -40,9 +43,10 @@ const Dashboard = () => {
         <Grid templateColumns="repeat(2, 1fr)" gap={6}>
           <GridItem w="100%">
             <EthereumForm />
+            <Transactions />
           </GridItem>
           <GridItem w="100%">
-            <Transactions />
+            <Articles />
           </GridItem>
         </Grid>
       </Container>

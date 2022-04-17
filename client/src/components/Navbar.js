@@ -1,9 +1,11 @@
 import { Box, Button, Flex, Input, Link, Text } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import React, { useContext, useState } from "react";
+import { FaEthereum, FaUserCircle, FaWallet } from "react-icons/fa";
 import { TransactionContext } from "../context/TransactionContext";
 import { connectWallet } from "../utils/connectWallet";
 import SearchBar from "./SearchBar";
+import { useAuth0 } from "@auth0/auth0-react";
 
 const Navbar = () => {
   const [connected, setConnected] = useState(false);
@@ -12,18 +14,19 @@ const Navbar = () => {
   const [hiddenSearchBox, setHiddenSearchBox] = useState(true);
   const { transactions } = useContext(TransactionContext);
 
+  const { user, isAuthenticated, logout } = useAuth0();
+
   const connect = () => {
-    const account = connectWallet();
-    if (account) {
-      setConnected(true);
-    }
+    connectWallet().then((isConnected) => {
+      if (isConnected) {
+        setConnected(true);
+      } else {
+        setConnected(false);
+      }
+    });
   };
 
   const filterTransactions = (transactions, query) => {
-    if (!query) {
-      return transactions;
-    }
-
     return transactions.filter((t) => {
       const transactionID = t.id;
       return transactionID == Number(query);
@@ -43,17 +46,20 @@ const Navbar = () => {
       p={4}
       gap={6}
     >
-      <Box>
+      <Flex alignItems="center">
         <Text fontSize="3xl" fontWeight="bold">
           ETHERVERSE
         </Text>
-      </Box>
+        <FaEthereum fontSize="30px" />
+      </Flex>
       <Box w="100%">
-        <SearchBar
-          search={search}
-          setSearch={setSearch}
-          onFocus={() => setHiddenSearchBox(false)}
-        />
+        {isAuthenticated ? (
+          <SearchBar
+            search={search}
+            setSearch={setSearch}
+            onFocus={() => setHiddenSearchBox(false)}
+          />
+        ) : null}
         {!hiddenSearchBox ? (
           <Flex
             flexDirection="column"
@@ -85,11 +91,29 @@ const Navbar = () => {
           </Flex>
         ) : null}
       </Box>
-      <Box>
-        <Button onClick={() => connect()} colorScheme="teal" rounded="full">
-          {connected ? "Connected" : "Connect"}
-        </Button>
-      </Box>
+      <Flex alignItems="center" gap={4}>
+        <Text fontSize="2xl" fontWeight="light">
+          {user?.email}
+        </Text>
+        {isAuthenticated ? (
+          <>
+            <FaUserCircle fontSize="40px" color="gray" />
+            <Button onClick={() => connect()} colorScheme="teal" rounded="full">
+              {connected ? "Connected" : "Connect"}
+              <Box ml={4}>
+                <FaWallet />
+              </Box>
+            </Button>
+            <Button
+              onClick={() => logout()}
+              bgColor="transparent"
+              color="red.500"
+            >
+              Logout
+            </Button>
+          </>
+        ) : null}
+      </Flex>
     </Flex>
   );
 };

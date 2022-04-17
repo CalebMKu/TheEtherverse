@@ -1,6 +1,7 @@
 import React from "react";
-import { Button, Flex, Text } from "@chakra-ui/react";
+import { Box, Button, Flex, Text } from "@chakra-ui/react";
 import { useAuth0 } from "@auth0/auth0-react";
+import { SiAuth0 } from "react-icons/si";
 
 const LoginForm = () => {
   const { loginWithRedirect } = useAuth0();
@@ -20,6 +21,9 @@ const LoginForm = () => {
       </Text>
       <Button onClick={() => loginWithRedirect()} colorScheme="teal" p={7}>
         Login With Auth0
+        <Box ml={4}>
+          <SiAuth0 fontSize="20px" />
+        </Box>
       </Button>
     </Flex>
   );

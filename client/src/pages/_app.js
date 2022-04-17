@@ -12,6 +12,8 @@ function MyApp({ Component, pageProps }) {
       domain="dev-gyxj-1gx.us.auth0.com"
       clientId="v9NXJzuuj3Qr48eb79OfxP10ncUO5TXr"
       redirectUri="http://localhost:3000/dashboard"
+      cacheLocation="localstorage"
+      useRefreshTokens
     >
       <TransactionProvider>
         <ChakraProvider resetCSS theme={theme}>
