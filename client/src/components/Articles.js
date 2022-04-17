@@ -12,8 +12,7 @@ const Articles = () => {
         url: "https://crypto-news-live3.p.rapidapi.com/news",
         headers: {
           "X-RapidAPI-Host": "crypto-news-live3.p.rapidapi.com",
-          "X-RapidAPI-Key":
-            "db1bf8a1bemsh7f1f8c096b552b7p158545jsne85d14b80586",
+          "X-RapidAPI-Key": process.env.NEXT_PUBLIC_RAPID_API_KEY,
         },
       })
       .then((response) => {
